@@ -121,6 +121,9 @@
             cursor: pointer;
             transition: var(--transition);
             box-shadow: 0 5px 15px rgba(37, 99, 235, 0.2);
+            margin-bottom: 1rem; /* Added for better mobile spacing */
+            width: auto; /* Ensure proper sizing on mobile */
+            text-align: center; /* Center text in buttons */
         }
         
         .btn:hover {
@@ -149,7 +152,7 @@
         }
         
         .logo {
-            font-size: 2rem; /* Reduced from 1.8rem */
+            font-size: 1.8rem; /* Adjusted size */
             font-weight: 700;
         }
         
@@ -174,9 +177,9 @@
             color: var(--dark-color);
             font-weight: 500;
             position: relative;
-            line-height: 1.2; /* Added to improve text alignment */
-            display: inline-block; /* Added to improve vertical alignment */
-            padding: 5px 0; /* Added small padding instead of relying on container height */
+            line-height: 1.2;
+            display: inline-block;
+            padding: 5px 0;
         }
         
         .nav-links a::after {
@@ -276,10 +279,15 @@
         
         .hero-btns {
             margin-top: 3rem;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap; /* Allow buttons to wrap on mobile */
+            gap: 1rem; /* Add space between buttons */
         }
         
         .hero-btns .btn {
-            margin: 0 0.75rem;
+            margin: 0;
+            min-width: 160px; /* Set minimum width for mobile */
         }
         
         /* About Section */
@@ -418,7 +426,7 @@
         
         .projects-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 2.5rem;
         }
         
@@ -592,7 +600,7 @@
             height: 100%;
             background-color: var(--primary-color);
             transition: var(--transition);
-            pointer-events: none; /* This prevents the pseudo-element from blocking clicks */
+            pointer-events: none;
         }
         
         .qr-container:hover::before {
@@ -656,39 +664,6 @@
             font-weight: 500;
         }
         
-        .contact-options {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-top: 2rem;
-            z-index: 10; /* Ensure this is above other elements */
-        }
-        
-        .contact-option {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            padding: 0.8rem 1.5rem;
-            background-color: white;
-            border-radius: 50px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-            transition: var(--transition);
-            cursor: pointer;
-            position: relative; /* Ensure it has its own stacking context */
-            z-index: 10; /* Higher z-index */
-        }
-        
-        .contact-option:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 15px rgba(0,0,0,0.08);
-        }
-        
-        .contact-option i {
-            color: var(--primary-color);
-            font-size: 1.2rem;
-        }
-        
         .or-divider {
             margin: 2rem 0;
             display: flex;
@@ -709,6 +684,42 @@
         .or-divider span {
             padding: 0 1rem;
             font-size: 0.9rem;
+        }
+        
+        .contact-options {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+            z-index: 10;
+            flex-wrap: wrap; /* Allow options to wrap on mobile */
+        }
+        
+        .contact-option {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1.5rem;
+            background-color: white;
+            border-radius: 50px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            transition: var(--transition);
+            cursor: pointer;
+            position: relative;
+            z-index: 10;
+            min-width: 140px; /* Set minimum width for mobile */
+            margin-bottom: 0.5rem; /* Add spacing when wrapped */
+        }
+        
+        .contact-option:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+        }
+        
+        .contact-option i {
+            color: var(--primary-color);
+            font-size: 1.2rem;
         }
         
         /* Footer */
@@ -746,6 +757,7 @@
             list-style: none;
             margin: 2rem 0;
             gap: 1.5rem;
+            flex-wrap: wrap; /* Allow social links to wrap on mobile */
         }
         
         .social-links a {
@@ -759,6 +771,7 @@
             justify-content: center;
             font-size: 1.2rem;
             transition: var(--transition);
+            margin: 0.25rem; /* Add margin when wrapped */
         }
         
         .social-links a:hover {
@@ -776,43 +789,125 @@
         /* Responsive */
         @media (max-width: 992px) {
             h1 {
-                font-size: 3rem;
+                font-size: 2.5rem; /* Reduced for mobile */
             }
             
             h2 {
-                font-size: 2.2rem;
+                font-size: 2rem; /* Reduced for mobile */
             }
             
             .contact-wrapper {
                 grid-template-columns: 1fr;
+                gap: 3rem; /* Reduced gap for mobile */
+            }
+            
+            .hero p {
+                font-size: 1rem; /* Smaller paragraph text on mobile */
+            }
+            
+            .section-title {
+                margin-bottom: 2.5rem; /* Reduced spacing on mobile */
             }
         }
         
         @media (max-width: 768px) {
-            .about-grid,
-            .contact-wrapper {
+            .container {
+                padding: 0 1.5rem; /* Reduced padding on mobile */
+            }
+            
+            .about-grid {
                 grid-template-columns: 1fr;
+                gap: 2rem; /* Reduced gap for mobile */
             }
             
             .about-img {
-                margin-bottom: 2rem;
+                margin-bottom: 1rem;
+                max-width: 80%; /* Limit image width on mobile */
+                margin-left: auto;
+                margin-right: auto;
             }
             
             .projects-grid {
                 grid-template-columns: 1fr;
+                gap: 2rem; /* Reduced gap for mobile */
+            }
+            
+            .skills-grid {
+                gap: 1.5rem; /* Reduced gap for mobile */
+            }
+            
+            .about-info {
+                grid-template-columns: 1fr; /* Stack info items on mobile */
+            }
+            
+            .info-item {
+                margin-bottom: 1rem;
+            }
+            
+            .hero-btns {
+                flex-direction: column; /* Stack buttons vertically on very small screens */
+                align-items: center;
+            }
+            
+            .hero-btns .btn {
+                width: 100%; /* Full width buttons on small screens */
+                max-width: 250px; /* Limit maximum width */
             }
             
             h1 {
-                font-size: 2.5rem;
+                font-size: 2rem; /* Further reduced for small screens */
+            }
+            
+            .project-img {
+                height: 200px; /* Reduced height on mobile */
+            }
+            
+            .contact-item {
+                margin-bottom: 1.5rem; /* Reduced spacing */
+            }
+            
+            .qr-code {
+                width: 180px; /* Slightly smaller on mobile */
+                height: 180px;
+            }
+            
+            .skill-card {
+                padding: 2rem 1.5rem; /* Reduced padding */
+            }
+        }
+        
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.8rem; /* Even smaller on very small screens */
             }
             
             h2 {
-                font-size: 2rem;
+                font-size: 1.6rem;
             }
             
-            .contact-options {
-                flex-direction: column;
-                align-items: center;
+            h3 {
+                font-size: 1.3rem;
+            }
+            
+            .skill-icon {
+                font-size: 2.5rem; /* Smaller icons */
+            }
+            
+            .contact-icon {
+                width: 40px; /* Smaller contact icons */
+                height: 40px;
+                font-size: 1.1rem;
+            }
+            
+            .contact-option {
+                padding: 0.6rem 1.2rem; /* Smaller padding */
+                font-size: 0.9rem; /* Smaller text */
+            }
+            
+            .social-links a {
+                width: 40px; /* Smaller social icons */
+                height: 40px;
+                font-size: 1rem;
             }
         }
 
@@ -893,9 +988,131 @@
         .download-btn:hover::after {
             left: 100%;
         }
+
+        /* Preloader styles */
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--background-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            opacity: 1;
+            transition: opacity 0.8s ease-out; /* Slowed down transition */
+        }
+
+        #preloader.fade-out {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .loader span {
+            color: var(--primary-color);
+            margin-top: 20px;
+            font-size: 22px;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .loader .circle {
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            animation: bounce 1.8s ease-in-out infinite;
+        }
+
+        .loader .circle:nth-child(1) {
+            left: 30px;
+            animation-delay: 0s;
+        }
+
+        .loader .circle:nth-child(2) {
+            animation-delay: 0.6s;
+        }
+
+        .loader .circle:nth-child(3) {
+            right: 30px;
+            animation-delay: 1.2s;
+        }
+
+        .loader .shadow {
+            position: absolute;
+            width: 25px;
+            height: 5px;
+            border-radius: 50%;
+            background-color: rgba(0, 0, 0, 0.2);
+            top: 100px;
+            filter: blur(1px);
+            animation: shadow 1.8s ease-in-out infinite;
+        }
+
+        .loader .shadow:nth-child(4) {
+            left: 30px;
+            animation-delay: 0s;
+        }
+
+        .loader .shadow:nth-child(5) {
+            animation-delay: 0.6s;
+        }
+
+        .loader .shadow:nth-child(6) {
+            right: 30px;
+            animation-delay: 1.2s;
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-70px);
+            }
+        }
+
+        @keyframes shadow {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 0.3;
+            }
+            50% {
+                transform: scale(0.5);
+                opacity: 0.1;
+            }
+        }
     </style>
 </head>
 <body>
+
+    <!-- Add this at the beginning of your body tag -->
+    <div id="preloader">
+        <div class="loader">
+            <div class="circle"></div>
+            <div class="circle"></div>
+            <div class="circle"></div>
+            <div class="shadow"></div>
+            <div class="shadow"></div>
+            <div class="shadow"></div>
+            <br>
+            <span>Loading</span>
+        </div>
+    </div>
+
     <!-- Header -->
     <header>
         <div class="container">
@@ -1082,8 +1299,8 @@
         </div>
         <div class="contact-wrapper">
             <div class="contact-info">
-                    <br>
-                    <br>
+                <br>
+                <br>
                 <h3>Mari berbicara tentang proyek Anda</h3>
                 <p>Jangan ragu untuk menghubungi saya jika Anda mencari pengembang, memiliki pertanyaan, atau hanya ingin terhubung.</p>
                 
@@ -1205,6 +1422,46 @@
         
         backToTopBtn.addEventListener('click', function() {
             window.scrollTo({top: 0, behavior: 'smooth'});
+        });
+    </script>
+    <!-- Add this script before the closing body tag -->
+    <script>
+        // Preloader script with minimum display time
+        window.addEventListener('load', function() {
+            const preloader = document.getElementById('preloader');
+            const startTime = window.preloaderStartTime || new Date().getTime();
+            const currentTime = new Date().getTime();
+            const elapsedTime = currentTime - startTime;
+            
+            // Ensure preloader shows for at least 1500ms (adjust as needed)
+            const minDisplayTime = 1500;
+            
+            if (elapsedTime >= minDisplayTime) {
+                fadeOutPreloader();
+            } else {
+                setTimeout(fadeOutPreloader, minDisplayTime - elapsedTime);
+            }
+            
+            function fadeOutPreloader() {
+                preloader.classList.add('fade-out');
+                
+                // Remove from DOM after animation completes
+                setTimeout(function() {
+                    preloader.style.display = 'none';
+                }, 1000); // Increased from 600ms to 1000ms
+            }
+        });
+
+        // Set start time when page begins loading
+        if (!window.preloaderStartTime) {
+            window.preloaderStartTime = new Date().getTime();
+        }
+
+        // Show preloader when page is about to unload
+        window.addEventListener('beforeunload', function() {
+            const preloader = document.getElementById('preloader');
+            preloader.classList.remove('fade-out');
+            preloader.style.display = 'flex';
         });
     </script>
     </body>
