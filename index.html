@@ -1425,44 +1425,59 @@
         });
     </script>
     <!-- Add this script before the closing body tag -->
-    <script>
-        // Preloader script with minimum display time
-        window.addEventListener('load', function() {
-            const preloader = document.getElementById('preloader');
-            const startTime = window.preloaderStartTime || new Date().getTime();
-            const currentTime = new Date().getTime();
-            const elapsedTime = currentTime - startTime;
-            
-            // Ensure preloader shows for at least 1500ms (adjust as needed)
-            const minDisplayTime = 1500;
-            
-            if (elapsedTime >= minDisplayTime) {
-                fadeOutPreloader();
-            } else {
-                setTimeout(fadeOutPreloader, minDisplayTime - elapsedTime);
-            }
-            
-            function fadeOutPreloader() {
-                preloader.classList.add('fade-out');
-                
-                // Remove from DOM after animation completes
-                setTimeout(function() {
-                    preloader.style.display = 'none';
-                }, 1000); // Increased from 600ms to 1000ms
-            }
-        });
-
-        // Set start time when page begins loading
-        if (!window.preloaderStartTime) {
-            window.preloaderStartTime = new Date().getTime();
+    <!-- Replace the existing preloader script with this updated version -->
+<script>
+    // Preloader script with improved navigation handling
+    window.addEventListener('load', function() {
+        const preloader = document.getElementById('preloader');
+        
+        // Check if this is a back navigation
+        const navigationType = performance.getEntriesByType("navigation")[0].type;
+        
+        // Force hide preloader immediately if back/forward navigation
+        if (navigationType === 'back_forward') {
+            preloader.style.display = 'none';
+            return;
         }
+        
+        const startTime = window.preloaderStartTime || new Date().getTime();
+        const currentTime = new Date().getTime();
+        const elapsedTime = currentTime - startTime;
+        
+        // Ensure preloader shows for at least 1500ms (adjust as needed)
+        const minDisplayTime = 1500;
+        
+        if (elapsedTime >= minDisplayTime) {
+            fadeOutPreloader();
+        } else {
+            setTimeout(fadeOutPreloader, minDisplayTime - elapsedTime);
+        }
+        
+        function fadeOutPreloader() {
+            preloader.classList.add('fade-out');
+            
+            // Remove from DOM after animation completes
+            setTimeout(function() {
+                preloader.style.display = 'none';
+            }, 1000);
+        }
+    });
 
-        // Show preloader when page is about to unload
-        window.addEventListener('beforeunload', function() {
-            const preloader = document.getElementById('preloader');
-            preloader.classList.remove('fade-out');
-            preloader.style.display = 'flex';
-        });
-    </script>
+    // Set start time when page begins loading
+    if (!window.preloaderStartTime) {
+        window.preloaderStartTime = new Date().getTime();
+    }
+
+    // Store navigation state in sessionStorage rather than showing preloader on beforeunload
+    // This prevents the infinite loading issue when returning to the page
+    window.addEventListener('beforeunload', function() {
+        sessionStorage.setItem('navigatingAway', 'true');
+    });
+
+    // Initialize page state
+    if (sessionStorage.getItem('navigatingAway') === 'true') {
+        sessionStorage.removeItem('navigatingAway');
+    }
+</script>
     </body>
     </html>
