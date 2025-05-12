@@ -1478,6 +1478,79 @@
     if (sessionStorage.getItem('navigatingAway') === 'true') {
         sessionStorage.removeItem('navigatingAway');
     }
+
+    function hidePreloader() {
+    const preloader = document.getElementById('preloader');
+    if (preloader) {
+        preloader.classList.add('fade-out');
+        setTimeout(function() {
+            preloader.style.display = 'none';
+        }, 500); // Dipercepat menjadi 500ms
+    }
+}
+
+// Memastikan preloader tersembunyi setelah navigasi kembali
+document.addEventListener('DOMContentLoaded', function() {
+    // Cek apakah ini adalah navigasi kembali, jika ya, sembunyikan preloader segera
+    if (performance && performance.getEntriesByType && performance.getEntriesByType("navigation").length > 0) {
+        const navType = performance.getEntriesByType("navigation")[0].type;
+        if (navType === 'back_forward') {
+            hidePreloader();
+            return;
+        }
+    }
+    
+    // Tambahkan listener untuk pageshow event (berfungsi lebih baik untuk mobile)
+    window.addEventListener('pageshow', function(event) {
+        // Jika halaman diambil dari cache navigasi (back/forward)
+        if (event.persisted) {
+            hidePreloader();
+        }
+    });
+    
+    // Tangani juga dengan cara tradisional
+    const startTime = new Date().getTime();
+    
+    // Listener load standar
+    window.addEventListener('load', function() {
+        const currentTime = new Date().getTime();
+        const elapsedTime = currentTime - startTime;
+        const minDisplayTime = 1000; // Dikurangi menjadi 1000ms
+        
+        if (elapsedTime >= minDisplayTime) {
+            hidePreloader();
+        } else {
+            setTimeout(hidePreloader, minDisplayTime - elapsedTime);
+        }
+    });
+});
+
+// Simpan status di localStorage (bertahan lebih lama dari sessionStorage)
+// Ini untuk mendeteksi navigasi kembali di berbagai implementasi browser
+window.addEventListener('beforeunload', function() {
+    localStorage.setItem('wasHere', 'true');
+    localStorage.setItem('lastVisit', new Date().getTime());
+});
+
+// Fungsi yang dijalankan lebih awal
+(function() {
+    // Jika user sudah pernah ke halaman ini dan kembali dalam waktu < 5 menit, sembunyikan preloader segera
+    const wasHere = localStorage.getItem('wasHere');
+    const lastVisit = localStorage.getItem('lastVisit');
+    const now = new Date().getTime();
+    
+    if (wasHere === 'true' && lastVisit && (now - parseInt(lastVisit)) < 300000) { // 5 menit dalam milidetik
+        // Ini berarti pengguna kembali dalam waktu 5 menit, kemungkinan besar kembali dari link
+        document.addEventListener('DOMContentLoaded', function() {
+            hidePreloader();
+        });
+    }
+})();
+
+// Tambahan: Force hide preloader setelah 10 detik (jaga-jaga jika semuanya gagal)
+setTimeout(function() {
+    hidePreloader();
+}, 10000);
 </script>
     </body>
     </html>
